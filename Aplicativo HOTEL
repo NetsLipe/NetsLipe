@@ -1,0 +1,36 @@
+# Importar a biblioteca requests
+import requests
+
+# Definir os dados da reserva
+data = {
+    "checkin": "2023-12-01",
+    "checkout": "2023-12-05",
+    "hotel": "Hotel Fazenda São Paulo",
+    "quartos": 2,
+    "adultos": 4,
+    "criancas": 0
+}
+
+# Construir a URL da API do serviço de reserva de hotel
+url = "https://api.reservahotel.com.br/reservar"
+
+# Fazer uma requisição POST para a URL e enviar os dados da reserva
+response = requests.post(url, data=data)
+
+# Verificar se a resposta foi bem sucedida
+if response.status_code == 200:
+    # Converter a resposta em um dicionário Python
+    data = response.json()
+
+    # Extrair as informações da reserva
+    codigo = data["codigo"]
+    valor = data["valor"]
+    status = data["status"]
+
+    # Imprimir as informações da reserva
+    print(f"Código da reserva: {codigo}")
+    print(f"Valor da reserva: R$ {valor:.2f}")
+    print(f"Status da reserva: {status}")
+else:
+    # Imprimir uma mensagem de erro
+    print(f"Erro ao fazer a reserva de hotel")
